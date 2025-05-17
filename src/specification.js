@@ -8,7 +8,7 @@ const {
   extractAnnotations,
   mergeDeep,
   extractYamlFromJsDoc,
-  isTagPresentInTags,
+  isTagPresentInTags
 } = require('./utils');
 
 /**
@@ -20,22 +20,9 @@ const {
 function prepare(definition) {
   const swaggerObject = JSON.parse(JSON.stringify(definition));
   const specificationTemplate = {
-    v2: [
-      'paths',
-      'definitions',
-      'responses',
-      'parameters',
-      'securityDefinitions',
-    ],
-    v3: [
-      'paths',
-      'definitions',
-      'responses',
-      'parameters',
-      'securityDefinitions',
-      'components',
-    ],
-    v4: ['components', 'channels'],
+    v2: ['paths', 'definitions', 'responses', 'parameters', 'securityDefinitions'],
+    v3: ['paths', 'definitions', 'responses', 'parameters', 'securityDefinitions', 'components'],
+    v4: ['components', 'channels']
   };
 
   const getVersion = () => {
@@ -84,12 +71,7 @@ function format(swaggerObject, ext) {
  * @returns {object} swaggerObject
  */
 function clean(swaggerObject) {
-  for (const prop of [
-    'definitions',
-    'responses',
-    'parameters',
-    'securityDefinitions',
-  ]) {
+  for (const prop of ['definitions', 'responses', 'parameters', 'securityDefinitions']) {
     if (hasEmptyProperty(swaggerObject[prop])) {
       delete swaggerObject[prop];
     }
@@ -128,10 +110,7 @@ function organize(swaggerObject, annotation, property) {
   // Root property on purpose.
   // @see https://github.com/OAI/OpenAPI-Specification/blob/master/proposals/002_Webhooks.md#proposed-solution
   if (property === 'x-webhooks') {
-    swaggerObject[property] = mergeDeep(
-      swaggerObject[property],
-      annotation[property]
-    );
+    swaggerObject[property] = mergeDeep(swaggerObject[property], annotation[property]);
   }
 
   // Other extensions can be in varying places depending on different vendors and opinions.
@@ -149,7 +128,7 @@ function organize(swaggerObject, annotation, property) {
     'responses',
     'parameters',
     'definitions',
-    'channels',
+    'channels'
   ];
   if (commonProperties.includes(property)) {
     for (const definition of Object.keys(annotation[property])) {
@@ -172,10 +151,7 @@ function organize(swaggerObject, annotation, property) {
     }
   } else {
     // Paths which are not defined as "paths" property, starting with a slash "/"
-    swaggerObject.paths[property] = mergeDeep(
-      swaggerObject.paths[property],
-      annotation[property]
-    );
+    swaggerObject.paths[property] = mergeDeep(swaggerObject.paths[property], annotation[property]);
   }
 }
 
@@ -195,15 +171,12 @@ function build(options) {
 
   for (const filePath of convertGlobPaths(options.apis)) {
     try {
-      const {
-        yaml: yamlAnnotations,
-        jsdoc: jsdocAnnotations,
-      } = extractAnnotations(filePath, options.encoding);
+      const { yaml: yamlAnnotations, jsdoc: jsdocAnnotations } = extractAnnotations(filePath, options.encoding);
 
       if (yamlAnnotations.length) {
         for (const annotation of yamlAnnotations) {
           const parsed = Object.assign(YAML.parseDocument(annotation), {
-            filePath,
+            filePath
           });
 
           const anchors = parsed.anchors.getNames();
@@ -269,9 +242,7 @@ function build(options) {
           const anchor = yamlDocsAnchors.get(refErr);
           const anchorString = anchor.cstNode.toString();
           const originalString = docWithErr.cstNode.toString();
-          const readyDocument = YAML.parseDocument(
-            `${anchorString}\n${originalString}`
-          );
+          const readyDocument = YAML.parseDocument(`${anchorString}\n${originalString}`);
 
           yamlDocsReady.push(readyDocument);
           errsToDelete.push(index);
@@ -293,13 +264,7 @@ function build(options) {
         let str = `Error in ${filePath} :\n`;
         if (options.verbose) {
           str += errors
-            .map(
-              (e) =>
-                `${e.toString()}\nImbedded within:\n\`\`\`\n  ${e.annotation.replace(
-                  /\n/g,
-                  '\n  '
-                )}\n\`\`\``
-            )
+            .map((e) => `${e.toString()}\nImbedded within:\n\`\`\`\n  ${e.annotation.replace(/\n/g, '\n  ')}\n\`\`\``)
             .join('\n');
         } else {
           str += errors.map((e) => e.toString()).join('\n');
@@ -313,9 +278,7 @@ function build(options) {
         throw new Error(errReport);
       }
       // Place to provide feedback for errors. Previously throwing, now reporting only.
-      console.info(
-        'Not all input has been taken into account at your final specification.'
-      );
+      console.info('Not all input has been taken into account at your final specification.');
 
       console.error(`Here's the report: \n\n\n ${errReport}`);
     }

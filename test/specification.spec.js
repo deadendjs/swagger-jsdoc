@@ -23,7 +23,7 @@ describe('Specification module', () => {
       expect(
         specModule.build({
           swaggerDefinition: {},
-          apis: ['./**/*/external/*.yml'],
+          apis: ['./**/*/external/*.yml']
         })
       ).toEqual({
         swagger: '2.0',
@@ -32,20 +32,18 @@ describe('Specification module', () => {
         responses: {
           api: {
             foo: { 200: { description: 'OK' } },
-            bar: { 200: { description: 'OK' } },
-          },
+            bar: { 200: { description: 'OK' } }
+          }
         },
         parameters: {},
         securityDefinitions: {},
-        tags: [],
+        tags: []
       });
     });
 
     it('should not throw an error if file cannot be open, and failOnErrors is false', () => {
       readFileSyncSpy.mockImplementation((filePath, options) => {
-        if (
-          filePath === path.resolve(__dirname, './files/v2/wrong_syntax.yaml')
-        ) {
+        if (filePath === path.resolve(__dirname, './files/v2/wrong_syntax.yaml')) {
           throw new Error('ENOENT: no such file or directory');
         }
 
@@ -57,9 +55,9 @@ describe('Specification module', () => {
           swaggerDefinition: {},
           apis: [
             path.resolve(__dirname, './files/v2/wrong_syntax.yaml'),
-            path.resolve(__dirname, './files/v2/api_definition.yaml'),
+            path.resolve(__dirname, './files/v2/api_definition.yaml')
           ],
-          failOnErrors: false,
+          failOnErrors: false
         })
       ).toEqual({
         swagger: '2.0',
@@ -67,14 +65,14 @@ describe('Specification module', () => {
           info: {
             title: 'Hello World',
             version: '1.0.0',
-            description: 'A sample API',
-          },
+            description: 'A sample API'
+          }
         },
         definitions: {},
         responses: {},
         parameters: {},
         securityDefinitions: {},
-        tags: [],
+        tags: []
       });
     });
 
@@ -87,7 +85,7 @@ describe('Specification module', () => {
         specModule.build({
           swaggerDefinition: {},
           apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
-          failOnErrors: true,
+          failOnErrors: true
         });
       }).toThrow();
     });
@@ -97,12 +95,9 @@ describe('Specification module', () => {
         specModule.build({
           swaggerDefinition: {},
           apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
-          failOnErrors: true,
+          failOnErrors: true
         });
-      }).toThrow(`Error in ${path.resolve(
-        __dirname,
-        './files/v2/wrong_syntax.yaml'
-      )} :
+      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong_syntax.yaml')} :
 YAMLSemanticError: The !!! tag handle is non-default and was not declared. at line 2, column 3:
 
   !!!title: Hello World
@@ -118,15 +113,10 @@ YAMLSemanticError: Implicit map keys need to be on a single line at line 2, colu
       expect(() => {
         specModule.build({
           swaggerDefinition: {},
-          apis: [
-            path.resolve(__dirname, './files/v2/wrong-yaml-identation.js'),
-          ],
-          failOnErrors: true,
+          apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
+          failOnErrors: true
         });
-      }).toThrow(`Error in ${path.resolve(
-        __dirname,
-        './files/v2/wrong-yaml-identation.js'
-      )} :
+      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
 YAMLSyntaxError: All collection items must start at the same column at line 1, column 1:
 
 /invalid_yaml:
@@ -142,16 +132,11 @@ YAMLSemanticError: Implicit map keys need to be followed by map values at line 3
       expect(() => {
         specModule.build({
           swaggerDefinition: {},
-          apis: [
-            path.resolve(__dirname, './files/v2/wrong-yaml-identation.js'),
-          ],
+          apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
           failOnErrors: true,
-          verbose: true,
+          verbose: true
         });
-      }).toThrow(`Error in ${path.resolve(
-        __dirname,
-        './files/v2/wrong-yaml-identation.js'
-      )} :
+      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
 YAMLSyntaxError: All collection items must start at the same column at line 1, column 1:
 
 /invalid_yaml:
@@ -189,14 +174,14 @@ Imbedded within:
             required: ['username', 'password'],
             properties: {
               username: {
-                type: 'string',
+                type: 'string'
               },
               password: {
-                type: 'string',
-              },
-            },
-          },
-        },
+                type: 'string'
+              }
+            }
+          }
+        }
       };
       specModule.organize(swaggerObject, annotation, 'definitions');
       expect(swaggerObject.definitions).toEqual({
@@ -204,9 +189,9 @@ Imbedded within:
           required: ['username', 'password'],
           properties: {
             username: { type: 'string' },
-            password: { type: 'string' },
-          },
-        },
+            password: { type: 'string' }
+          }
+        }
       });
     });
 
@@ -219,9 +204,9 @@ Imbedded within:
             description: 'max records to return',
             required: true,
             type: 'integer',
-            format: 'int32',
-          },
-        },
+            format: 'int32'
+          }
+        }
       };
       specModule.organize(swaggerObject, annotation, 'parameters');
       expect(swaggerObject.parameters).toEqual({
@@ -231,8 +216,8 @@ Imbedded within:
           description: 'max records to return',
           required: true,
           type: 'integer',
-          format: 'int32',
-        },
+          format: 'int32'
+        }
       });
     });
 
@@ -241,18 +226,16 @@ Imbedded within:
         securityDefinitions: {
           basicAuth: {
             type: 'basic',
-            description:
-              'HTTP Basic Authentication. Works over `HTTP` and `HTTPS`',
-          },
-        },
+            description: 'HTTP Basic Authentication. Works over `HTTP` and `HTTPS`'
+          }
+        }
       };
       specModule.organize(swaggerObject, annotation, 'securityDefinitions');
       expect(swaggerObject.securityDefinitions).toEqual({
         basicAuth: {
           type: 'basic',
-          description:
-            'HTTP Basic Authentication. Works over `HTTP` and `HTTPS`',
-        },
+          description: 'HTTP Basic Authentication. Works over `HTTP` and `HTTPS`'
+        }
       });
     });
 
@@ -260,13 +243,13 @@ Imbedded within:
       const annotation = {
         responses: {
           IllegalInput: {
-            description: 'Illegal input for operation.',
-          },
-        },
+            description: 'Illegal input for operation.'
+          }
+        }
       };
       specModule.organize(swaggerObject, annotation, 'responses');
       expect(swaggerObject.responses).toEqual({
-        IllegalInput: { description: 'Illegal input for operation.' },
+        IllegalInput: { description: 'Illegal input for operation.' }
       });
     });
   });

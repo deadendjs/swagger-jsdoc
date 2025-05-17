@@ -1,5 +1,7 @@
 ## Change Log
 
+### v8.0.0 (2025/xx/xx xx:xx +03:00)
+
 ### v6.0.9 (2021/03/07 10:34 +00:00)
 
 - [#256](https://github.com/Surnet/swagger-jsdoc/pull/256) fix(anchors): applied a fix for anchors living in seperate files with… (#256) (@goldsziggy)

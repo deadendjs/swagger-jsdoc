@@ -13,11 +13,11 @@ describe('Main lib module', () => {
         swaggerDefinition: {
           info: {
             title: 'Example weird characters',
-            version: '1.0.0',
-          },
+            version: '1.0.0'
+          }
         },
         apis: ['./test/fixtures/non-utf-file.js'],
-        encoding: 'ascii',
+        encoding: 'ascii'
       });
 
       expect(result).toEqual({
@@ -26,22 +26,20 @@ describe('Main lib module', () => {
         paths: {
           '/no-utf8': {
             get: {
-              description:
-                "p\u001d\u00175D\u0015E\u0000a87p\u001d\u0019$ a:\u0018a;#p\u001d\u0019'a8;D\u000f",
+              description: "p\u001d\u00175D\u0015E\u0000a87p\u001d\u0019$ a:\u0018a;#p\u001d\u0019'a8;D\u000f",
               responses: {
                 200: {
-                  description:
-                    'j\u001e\u000eG\u0012I<p\u001d\u0019\u001aa6\u0006 a;\u000bb2#E\u001da;+I1',
-                },
-              },
-            },
-          },
+                  description: 'j\u001e\u000eG\u0012I<p\u001d\u0019\u001aa6\u0006 a;\u000bb2#E\u001da;+I1'
+                }
+              }
+            }
+          }
         },
         definitions: {},
         responses: {},
         parameters: {},
         securityDefinitions: {},
-        tags: [],
+        tags: []
       });
     });
   });
@@ -57,13 +55,12 @@ describe('Main lib module', () => {
             url: '{scheme}://developer.uspto.gov/ds-api',
             variables: {
               scheme: {
-                description:
-                  'The Data Set API is accessible via https and http',
+                description: 'The Data Set API is accessible via https and http',
                 enum: ['https', 'http'],
-                default: 'https',
-              },
-            },
-          },
+                default: 'https'
+              }
+            }
+          }
         ],
         info: {
           description:
@@ -73,14 +70,14 @@ describe('Main lib module', () => {
           contact: {
             name: 'Open Data Portal',
             url: 'https://developer.uspto.gov',
-            email: 'developer@uspto.gov',
-          },
-        },
+            email: 'developer@uspto.gov'
+          }
+        }
       };
 
       const options = {
         definition,
-        apis: [],
+        apis: []
       };
 
       expect(swaggerJsdoc(options)).toEqual({
@@ -90,13 +87,12 @@ describe('Main lib module', () => {
             url: '{scheme}://developer.uspto.gov/ds-api',
             variables: {
               scheme: {
-                description:
-                  'The Data Set API is accessible via https and http',
+                description: 'The Data Set API is accessible via https and http',
                 enum: ['https', 'http'],
-                default: 'https',
-              },
-            },
-          },
+                default: 'https'
+              }
+            }
+          }
         ],
         info: {
           description:
@@ -106,12 +102,12 @@ describe('Main lib module', () => {
           contact: {
             name: 'Open Data Portal',
             url: 'https://developer.uspto.gov',
-            email: 'developer@uspto.gov',
-          },
+            email: 'developer@uspto.gov'
+          }
         },
         paths: {},
         components: {},
-        tags: [],
+        tags: []
       });
     });
 
@@ -121,21 +117,19 @@ describe('Main lib module', () => {
         const examplePath = `${__dirname}/files/v3/${example}`;
 
         // eslint-disable-next-line
-        const referenceSpecification = require(path.resolve(
-          `${examplePath}/openapi.json`
-        ));
+        const referenceSpecification = require(path.resolve(`${examplePath}/openapi.json`));
 
         const definition = {
           openapi: '3.0.0',
           info: {
             version: '1.0.0',
-            title,
-          },
+            title
+          }
         };
 
         const options = {
           definition,
-          apis: [`${examplePath}/api.js`],
+          apis: [`${examplePath}/api.js`]
         };
 
         const specification = swaggerJsdoc(options);

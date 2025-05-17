@@ -1,6 +1,6 @@
 # Reporting issues
 
-Before starting a new issue, please [check whether there is an existing one](https://github.com/Surnet/swagger-jsdoc/issues). It is quite possible that the topic you would like to bring up has been discussed already in the past.
+Before starting a new issue, please [check whether there is an existing one](https://github.com/deadendjs/swagger-jsdoc/issues). It is quite possible that the topic you would like to bring up has been discussed already in the past.
 
 In case of an issue which hasn't been considered yet, please include as much information as possible. This will help maintainers and other users relate to your problem and possibly solve it.
 
@@ -14,7 +14,7 @@ Guidelines:
 
 ## Contributing
 
-The project exists thanks to the [many contributors](https://github.com/Surnet/swagger-jsdoc/graphs/contributors) who shared their use cases, questions, comments and suggestions for improvements.
+The project exists thanks to the [many contributors](https://github.com/deadendjs/swagger-jsdoc/graphs/contributors) who shared their use cases, questions, comments and suggestions for improvements.
 
 Here's how to jump in and contribute yourself:
 

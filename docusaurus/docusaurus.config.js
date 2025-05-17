@@ -6,20 +6,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'swagger-jsdoc Official Documentation',
-  tagline:
-    'Generates swagger/openapi specification based on jsDoc comments and YAML files.',
-  url: 'https://github.com/Surnet/swagger-jsdoc',
+  tagline: 'Generates swagger/openapi specification based on jsDoc comments and YAML files.',
+  url: 'https://github.com/deadendjs/swagger-jsdoc',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
-  organizationName: 'Surnet',
+  organizationName: 'deadendjs',
   projectName: 'swagger-jsdoc',
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en']
   },
 
   presets: [
@@ -29,14 +28,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/Surnet/swagger-jsdoc/tree/master/docusaurus',
+          editUrl: 'https://github.com/deadendjs/swagger-jsdoc/tree/master/docusaurus'
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
-    ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      })
+    ]
   ],
 
   themeConfig:
@@ -53,17 +51,17 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Tutorial'
           },
           {
-            href: 'https://github.com/Surnet/swagger-jsdoc',
+            href: 'https://github.com/deadendjs/swagger-jsdoc',
             label: 'GitHub',
-            position: 'right',
+            position: 'right'
           },
           {
-            type: 'docsVersionDropdown',
-          },
-        ],
+            type: 'docsVersionDropdown'
+          }
+        ]
       },
       footer: {
         style: 'dark',
@@ -73,18 +71,18 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
+                to: '/docs/intro'
+              }
+            ]
+          }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} swagger-jsdoc, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} swagger-jsdoc, Inc. Built with Docusaurus.`
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
+        darkTheme: darkCodeTheme
+      }
+    })
 };
 
 module.exports = config;

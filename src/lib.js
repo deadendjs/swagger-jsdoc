@@ -18,15 +18,11 @@ module.exports = (options) => {
   }
 
   if (!options.swaggerDefinition && !options.definition) {
-    throw new Error(
-      `Missing or invalid input: 'options.swaggerDefinition' or 'options.definition' is required`
-    );
+    throw new Error(`Missing or invalid input: 'options.swaggerDefinition' or 'options.definition' is required`);
   }
 
   if (!options.apis || !Array.isArray(options.apis)) {
-    throw new Error(
-      `Missing or invalid input: 'options.apis' is required and it should be an array.`
-    );
+    throw new Error(`Missing or invalid input: 'options.apis' is required and it should be an array.`);
   }
 
   return build(options);

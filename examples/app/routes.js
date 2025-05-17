@@ -88,7 +88,7 @@ module.exports.setup = (app) => {
    */
   app.get('/users', (req, res) => {
     res.json({
-      username: 'jsmith',
+      username: 'jsmith'
     });
   });
 

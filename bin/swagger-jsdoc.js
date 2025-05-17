@@ -11,10 +11,7 @@ const { loadDefinition } = require('../src/utils');
 program
   .version(pkg.version)
   .usage('[options] <path ...>')
-  .option(
-    '-d, --definition <swaggerDefinition.js>',
-    'Input swagger definition.'
-  )
+  .option('-d, --definition <swaggerDefinition.js>', 'Input swagger definition.')
   .option('-o, --output [swaggerSpec.json]', 'Output swagger specification.')
   .parse(process.argv);
 
@@ -35,14 +32,9 @@ if (!definition) {
 let swaggerDefinition;
 
 try {
-  swaggerDefinition = loadDefinition(
-    definition,
-    fs.readFileSync(definition, 'utf-8')
-  );
+  swaggerDefinition = loadDefinition(definition, fs.readFileSync(definition, 'utf-8'));
 } catch (error) {
-  console.log(
-    `Error while loading definition file '${definition}':\n${error.message}`
-  );
+  console.log(`Error while loading definition file '${definition}':\n${error.message}`);
   process.exit();
 }
 
@@ -54,10 +46,7 @@ if (!('info' in swaggerDefinition)) {
 }
 
 // Check for title and version properties in the info object.
-if (
-  !('title' in swaggerDefinition.info) ||
-  !('version' in swaggerDefinition.info)
-) {
+if (!('title' in swaggerDefinition.info) || !('version' in swaggerDefinition.info)) {
   console.log('The title and version properties are required!');
   console.log('More at http://swagger.io/specification/#infoObject');
   process.exit();
@@ -74,7 +63,7 @@ const format = path.extname(output);
 const result = swaggerJsdoc({
   swaggerDefinition,
   apis: program.args,
-  format,
+  format
 });
 
 if (format === '.json') {

@@ -1,10 +1,10 @@
 version: 2
 
 updates:
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: "fix: "
       prefix-development: "fix(dev-deps): "

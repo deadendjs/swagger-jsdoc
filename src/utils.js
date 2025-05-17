@@ -9,9 +9,7 @@ const mergeWith = require('lodash.mergewith');
  * @return {array} Array of fully-qualified paths
  */
 function convertGlobPaths(globs) {
-  return globs
-    .map((globString) => glob.sync(globString))
-    .reduce((previous, current) => previous.concat(current), []);
+  return globs.map((globString) => glob.sync(globString)).reduce((previous, current) => previous.concat(current), []);
 }
 
 /**
@@ -22,11 +20,7 @@ function convertGlobPaths(globs) {
 function hasEmptyProperty(obj) {
   return Object.keys(obj)
     .map((key) => obj[key])
-    .every(
-      (keyObject) =>
-        typeof keyObject === 'object' &&
-        Object.keys(keyObject).every((key) => !(key in keyObject))
-    );
+    .every((keyObject) => typeof keyObject === 'object' && Object.keys(keyObject).every((key) => !(key in keyObject)));
 }
 
 /**
@@ -119,7 +113,7 @@ function loadDefinition(defPath, swaggerDefinition) {
     '.cjs': loadCjs,
     '.json': loadJson,
     '.yml': loadYaml,
-    '.yaml': loadYaml,
+    '.yaml': loadYaml
   };
 
   const loader = LOADERS[extName];

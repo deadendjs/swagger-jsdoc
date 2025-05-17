@@ -8,10 +8,10 @@ describe('Example for using extensions', () => {
       swaggerDefinition: {
         info: {
           title: 'Example with extensions',
-          version: '0.0.1',
-        },
+          version: '0.0.1'
+        }
       },
-      apis: ['./examples/extensions/x-webhooks-single.js'],
+      apis: ['./examples/extensions/x-webhooks-single.js']
     });
     expect(result).toEqual(webhooksSingleSpecification);
   });
@@ -21,10 +21,10 @@ describe('Example for using extensions', () => {
       swaggerDefinition: {
         info: {
           title: 'Example with extensions',
-          version: '0.0.1',
-        },
+          version: '0.0.1'
+        }
       },
-      apis: ['./examples/extensions/x-webhooks-multiple.js'],
+      apis: ['./examples/extensions/x-webhooks-multiple.js']
     });
     expect(result).toEqual(webhooksMultipleSpecification);
   });

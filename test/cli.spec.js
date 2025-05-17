@@ -38,63 +38,49 @@ describe('CLI module', () => {
   });
 
   it('should create swagger.json by default when the API input is good', async () => {
-    const result = await sh(
-      `${bin} -d examples/app/swaggerDefinition.cjs examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('swagger.json');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should create swagger.json by default when the API input is from definition file', async () => {
-    const result = await sh(
-      `${bin} -d test/files/v2/api_definition.cjs examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d test/files/v2/api_definition.cjs examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('swagger.json');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should accept custom configuration for output specification', async () => {
-    const result = await sh(
-      `${bin} -d examples/app/swaggerDefinition.cjs examples/app/routes.js -o customSpec.json`
-    );
+    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs examples/app/routes.js -o customSpec.json`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('customSpec.json');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should create a YAML swagger spec when a custom output configuration with a .yaml extension is used', async () => {
-    const result = await sh(
-      `${bin} -d examples/app/swaggerDefinition.cjs -o customSpec.yaml examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs -o customSpec.yaml examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('customSpec.yaml');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should allow a JavaScript definition file', async () => {
-    const result = await sh(
-      `${bin} -d test/files/v2/api_definition.cjs examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d test/files/v2/api_definition.cjs examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('swagger.json');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should allow a JSON definition file', async () => {
-    const result = await sh(
-      `${bin} -d test/files/v2/api_definition.json examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d test/files/v2/api_definition.json examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('swagger.json');
     expect(specification.nlink).not.toBe(0);
   });
 
   it('should allow a YAML definition file', async () => {
-    const result = await sh(
-      `${bin} -d test/files/v2/api_definition.yaml examples/app/routes.js`
-    );
+    const result = await sh(`${bin} -d test/files/v2/api_definition.yaml examples/app/routes.js`);
     expect(result.stdout).toBe('Swagger specification is ready.\n');
     const specification = fs.statSync('swagger.json');
     expect(specification.nlink).not.toBe(0);
@@ -111,13 +97,9 @@ describe('CLI module', () => {
   });
 
   it('should report YAML documents with errors', async () => {
-    const result = await sh(
-      `${bin} -d examples/app/swaggerDefinition.cjs test/files/v2/wrong-yaml-identation.js`
-    );
+    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs test/files/v2/wrong-yaml-identation.js`);
 
-    expect(result.stdout).toContain(
-      'Not all input has been taken into account at your final specification.'
-    );
+    expect(result.stdout).toContain('Not all input has been taken into account at your final specification.');
     expect(result.stderr).toMatchSnapshot();
   });
 
@@ -141,6 +123,5 @@ describe('CLI module', () => {
     fs.unlinkSync(`${dir}/swagger.json`);
     fs.unlinkSync(`${dir}/customSpec.json`);
     fs.unlinkSync(`${dir}/customSpec.yaml`);
-    fs.unlinkSync(`${dir}/customSpec.yml`);
   });
 });

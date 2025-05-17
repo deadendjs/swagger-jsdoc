@@ -7,14 +7,14 @@ describe('Example for using anchors and aliases in YAML documents', () => {
       swaggerDefinition: {
         info: {
           title: 'Example with anchors and aliases',
-          version: '0.0.1',
-        },
+          version: '0.0.1'
+        }
       },
       apis: [
         './examples/yaml-anchors-aliases/x-amazon-apigateway-integrations.yaml',
         './examples/yaml-anchors-aliases/properties/*.yml',
-        './examples/yaml-anchors-aliases/example.js',
-      ],
+        './examples/yaml-anchors-aliases/example.js'
+      ]
     });
     expect(result).toEqual(referenceSpecification);
   });
@@ -25,16 +25,16 @@ describe('Example for using anchors and aliases in YAML documents', () => {
         swaggerDefinition: {
           info: {
             title: 'Example with anchors and aliases',
-            version: '0.0.1',
-          },
+            version: '0.0.1'
+          }
         },
         failOnErrors: true,
         apis: [
           './examples/yaml-anchors-aliases/x-amazon-apigateway-integrations.yaml',
           './examples/yaml-anchors-aliases/properties/*.yml',
-          './examples/yaml-anchors-aliases/example.js',
-        ],
+          './examples/yaml-anchors-aliases/example.js'
+        ]
       });
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 });
