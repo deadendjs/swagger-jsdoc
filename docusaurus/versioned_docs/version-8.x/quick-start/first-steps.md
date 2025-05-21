@@ -1,3 +1,7 @@
+---
+title: First Steps
+---
+
 ## Specification version
 
 `swagger-jsdoc` was created in 2015. The OpenAPI as a concept did not exist, and thus the naming of the package itself.
@@ -7,10 +11,10 @@ The default target specification is 2.0. This provides backwards compatibility f
 In order to create a specification compatibile with 3.0 or higher, i.e. the so called OpenAPI, set this information in the `swaggerDefinition`:
 
 ```diff
-const swaggerJsdoc = require('swagger-jsdoc');
+import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
-  swaggerDefinition: {
+  definition: {
 +   openapi: '3.0.0',
     info: {
       title: 'Hello World',
@@ -20,7 +24,7 @@ const options = {
   apis: ['./src/routes*.js'],
 };
 
-const swaggerSpecification = swaggerJsdoc(options);
+const openapiSpecification = await swaggerJsdoc(options);
 ```
 
 ## Annotating source code
@@ -104,6 +108,7 @@ Here's a list of example public open-source usages of the package:
 - [godaddy/warehouse.ai-status-api](https://github.com/godaddy/warehouse.ai-status-api)
 - [hana-developer-cli-tool-example](https://github.com/SAP-samples/hana-developer-cli-tool-example)
 - [studiohyperdrive/api-docs](https://github.com/studiohyperdrive/api-docs)
+- [More Examples](https://github.com/deadendjs/swagger-jsdoc/tree/master/examples)
 
 ## Related projects
 

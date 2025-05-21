@@ -2,6 +2,8 @@
 
 ### v8.0.0 (2025/xx/xx xx:xx +03:00)
 
+- [3e2ca9f](https://github.com/deadendjs/swagger-jsdoc/commit/3e2ca9f1694f986fe083a2d44f1e30709b285e23) Update dependencies (@mcfizh)
+
 ### v6.0.9 (2021/03/07 10:34 +00:00)
 
 - [#256](https://github.com/Surnet/swagger-jsdoc/pull/256) fix(anchors): applied a fix for anchors living in seperate files with… (#256) (@goldsziggy)

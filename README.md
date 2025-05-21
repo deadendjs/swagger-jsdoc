@@ -51,18 +51,12 @@ The resulting `openapiSpecification` will be a [swagger tools](https://swagger.i
 
 - Node.js 20.x or higher
 
-You are viewing `swagger-jsdoc` v6 which is published in CommonJS module system.
+You are viewing `swagger-jsdoc` v8 which is published in CommonJS module system.
 
 ## Installation
 
 ```bash
-npm install swagger-jsdoc --save
-```
-
-Or
-
-```bash
-yarn add swagger-jsdoc
+npm install @deadendjs/swagger-jsdoc --save
 ```
 
 ## Supported specifications
@@ -97,4 +91,5 @@ const openapiSpecification = swaggerJsdoc(options);
 
 Click on the version you are using for further details:
 
-- [7.x](https://github.com/deadendjs/swagger-jsdoc/tree/v7/docs)
+- [8.x](https://github.com/deadendjs/swagger-jsdoc/tree/v8/docs)
+- [6.x](https://github.com/deadendjs/swagger-jsdoc/tree/v6/docs)

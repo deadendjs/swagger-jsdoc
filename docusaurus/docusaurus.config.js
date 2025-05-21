@@ -7,8 +7,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'swagger-jsdoc Official Documentation',
   tagline: 'Generates swagger/openapi specification based on jsDoc comments and YAML files.',
-  url: 'https://github.com/deadendjs/swagger-jsdoc',
-  baseUrl: '/',
+  url: 'https://deadendjs.github.io',
+  baseUrl: '/swagger-jsdoc',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',

@@ -1,5 +1,5 @@
 {
-  "name": "swagger-jsdoc",
+  "name": "@deadendjs/swagger-jsdoc",
   "description": "Generates swagger doc based on JSDoc",
   "version": "8.0.0",
   "engines": {
