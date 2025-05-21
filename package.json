@@ -18,11 +18,11 @@
     "swagger-jsdoc": "./bin/swagger-jsdoc.js"
   },
   "dependencies": {
+    "@apidevtools/swagger-parser": "10.1.0",
     "commander": "^14.0.0",
     "doctrine": "3.0.0",
     "glob": "^11.0.2",
     "lodash.mergewith": "^4.6.2",
-    "swagger-parser": "^10.0.3",
     "yaml": "2.0.0-1"
   },
   "devDependencies": {

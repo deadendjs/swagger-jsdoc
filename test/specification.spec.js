@@ -77,14 +77,10 @@ describe('Specification module', () => {
     });
 
     it('should throw an error if file cannot be open, and failOnErrors is true', () => {
-      readFileSyncSpy.mockImplementation(() => {
-        throw new Error('ENOENT: no such file or directory');
-      });
-
       expect(() => {
         specModule.build({
           swaggerDefinition: {},
-          apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
+          apis: [path.resolve(__dirname, './files/v2/this_file_does_not_exist.yaml')],
           failOnErrors: true
         });
       }).toThrow();

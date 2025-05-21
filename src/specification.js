@@ -1,5 +1,5 @@
 const doctrine = require('doctrine');
-const parser = require('swagger-parser');
+const swaggerParser = require('@apidevtools/swagger-parser');
 const YAML = require('yaml');
 
 const {
@@ -88,7 +88,7 @@ function clean(swaggerObject) {
  */
 function finalize(swaggerObject, options) {
   let specification = swaggerObject;
-  parser.parse(swaggerObject, (err, api) => {
+  swaggerParser.parse(swaggerObject, (err, api) => {
     if (!err) {
       specification = api;
     }
