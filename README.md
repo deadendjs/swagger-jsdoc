@@ -89,7 +89,4 @@ const openapiSpecification = swaggerJsdoc(options);
 
 ## Documentation
 
-Click on the version you are using for further details:
-
-- [8.x](https://github.com/deadendjs/swagger-jsdoc/tree/v8/docs)
-- [6.x](https://github.com/deadendjs/swagger-jsdoc/tree/v6/docs)
+[Documentation on github pages](https://deadendjs.github.io/swagger-jsdoc/)

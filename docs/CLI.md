@@ -6,12 +6,6 @@ The CLI is a thin wrapper around the library Node API. It's available with the s
 swagger-jsdoc
 ```
 
-Or through the standard ways provided by your package manager:
-
-```bash
-yarn swagger-jsdoc
-```
-
 ## Usage
 
 Print the help menu:

@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const program = require('commander');
+const { program } = require('commander');
 
 const pkg = require('../package.json');
 const swaggerJsdoc = require('..');
@@ -11,22 +11,22 @@ const { loadDefinition } = require('../src/utils');
 program
   .version(pkg.version)
   .usage('[options] <path ...>')
+  .argument('[source]')
   .option('-d, --definition <swaggerDefinition.js>', 'Input swagger definition.')
   .option('-o, --output [swaggerSpec.json]', 'Output swagger specification.')
-  .parse(process.argv);
+  .parse();
 
 if (!process.argv.slice(2).length) {
   program.help();
-  process.exit();
 }
 
-const { definition } = program;
-const output = program.output || 'swagger.json';
+const options = program.opts();
+const definition = options.definition || '';
+const output = options.output || 'swagger.json';
 
 if (!definition) {
   console.log('Definition file is required.');
   program.help();
-  process.exit();
 }
 
 let swaggerDefinition;
@@ -59,12 +59,7 @@ if (!program.args.length) {
 }
 
 const format = path.extname(output);
-
-const result = swaggerJsdoc({
-  swaggerDefinition,
-  apis: program.args,
-  format
-});
+const result = swaggerJsdoc({ swaggerDefinition, apis: program.args, format });
 
 if (format === '.json') {
   fs.writeFileSync(output, JSON.stringify(result, null, 2));
