@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 module.exports.setup = function (app) {
   /**
    * @swagger

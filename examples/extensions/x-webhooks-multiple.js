@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 /**
  * Example of cat
  *

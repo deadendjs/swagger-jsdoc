@@ -102,10 +102,8 @@ function loadDefinition(defPath, swaggerDefinition) {
   const resolvedPath = path.resolve(defPath);
   const extName = path.extname(resolvedPath);
 
-  // eslint-disable-next-line
   const loadCjs = () => require(resolvedPath);
   const loadJson = () => JSON.parse(swaggerDefinition);
-  // eslint-disable-next-line
   const loadYaml = () => require('yaml').parse(swaggerDefinition);
 
   const LOADERS = {

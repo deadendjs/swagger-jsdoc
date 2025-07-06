@@ -1,6 +1,4 @@
-/* istanbul ignore file */
-
-module.exports.setup = (app) => {
+exports.setup = (app) => {
   /**
    * @swagger
    * /hello:

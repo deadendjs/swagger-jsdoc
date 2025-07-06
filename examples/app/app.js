@@ -1,6 +1,3 @@
-/* istanbul ignore file */
-/* eslint import/no-extraneous-dependencies: 0 */
-
 // Dependencies
 const express = require('express');
 const routes = require('./routes');

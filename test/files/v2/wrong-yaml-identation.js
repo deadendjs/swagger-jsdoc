@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 module.exports = (app) => {
   /**
    * @swagger

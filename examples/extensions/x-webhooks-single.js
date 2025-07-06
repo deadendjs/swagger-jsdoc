@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 /**
  * Example taken from https://redocly.github.io/redoc/openapi.yaml
  *

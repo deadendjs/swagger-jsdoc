@@ -116,7 +116,6 @@ describe('Main lib module', () => {
         const title = `Sample specification testing ${example}`;
         const examplePath = `${__dirname}/files/v3/${example}`;
 
-        // eslint-disable-next-line
         const referenceSpecification = require(path.resolve(`${examplePath}/openapi.json`));
 
         const definition = {
