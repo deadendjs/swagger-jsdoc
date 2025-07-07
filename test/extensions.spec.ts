@@ -1,6 +1,6 @@
-const swaggerJsdoc = require('../..');
-const webhooksSingleSpecification = require('./x-webhooks-single-reference-specification.json');
-const webhooksMultipleSpecification = require('./x-webhooks-multiple-reference-specification.json');
+import swaggerJsdoc from '../index.js';
+import webhooksSingleSpecification from '../examples/extensions/x-webhooks-single-reference-specification.json';
+import webhooksMultipleSpecification from '../examples/extensions/x-webhooks-multiple-reference-specification.json';
 
 describe('Example for using extensions', () => {
   it('should support single entry in x-webhooks', () => {

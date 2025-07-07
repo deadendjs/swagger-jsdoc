@@ -1,5 +1,5 @@
-const swaggerJsdoc = require('../..');
-const referenceSpecification = require('./reference-specification.json');
+import swaggerJsdoc from '../index.js';
+import referenceSpecification from '../examples/yaml-anchors-aliases/reference-specification.json';
 
 describe('Example for using anchors and aliases in YAML documents', () => {
   it('should handle references in a separate YAML file', () => {

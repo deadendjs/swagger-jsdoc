@@ -1,7 +1,9 @@
-const path = require('path');
-const fs = require('fs');
-const specModule = require('../src/specification');
-const swaggerObject = require('./files/v2/swaggerObject.json');
+import path from 'path';
+import fs from 'fs';
+import { jest } from '@jest/globals';
+
+import * as specModule from '../src/specification.js';
+import swaggerObject from './files/v2/swaggerObject.json';
 
 const originalReadFileSync = fs.readFileSync;
 let readFileSyncSpy;

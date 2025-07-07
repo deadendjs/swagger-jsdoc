@@ -1,6 +1,5 @@
-const path = require('path');
-
-const swaggerJsdoc = require('../src/lib');
+import { resolve } from 'path';
+import swaggerJsdoc from '../index.js';
 
 describe('Main lib module', () => {
   describe('General', () => {
@@ -116,7 +115,7 @@ describe('Main lib module', () => {
         const title = `Sample specification testing ${example}`;
         const examplePath = `${__dirname}/files/v3/${example}`;
 
-        const referenceSpecification = require(path.resolve(`${examplePath}/openapi.json`));
+        const referenceSpecification = require(resolve(`${examplePath}/openapi.json`));
 
         const definition = {
           openapi: '3.0.0',

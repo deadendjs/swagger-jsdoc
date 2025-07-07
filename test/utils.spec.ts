@@ -1,6 +1,4 @@
-/* eslint no-unused-expressions: 0 */
-
-const utils = require('../src/utils');
+import * as utils from '../src/utils.js';
 
 describe('Utilities module', () => {
   describe('hasEmptyProperty', () => {

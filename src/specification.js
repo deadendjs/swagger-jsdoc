@@ -17,7 +17,7 @@ const {
  * @param {object} definition - The `definition` or `swaggerDefinition` from options.
  * @returns {object} swaggerObject
  */
-function prepare(definition) {
+const prepare = (definition) => {
   const swaggerObject = JSON.parse(JSON.stringify(definition));
   const specificationTemplate = {
     v2: ['paths', 'definitions', 'responses', 'parameters', 'securityDefinitions'],
@@ -51,18 +51,18 @@ function prepare(definition) {
   swaggerObject.tags = swaggerObject.tags || [];
 
   return swaggerObject;
-}
+};
 
 /**
  * @param {object} obj
- * @param {string} ext
+ * @param {string} [ext] - File extension
  */
-function format(swaggerObject, ext) {
+const format = (swaggerObject, ext) => {
   if (ext === '.yml' || ext === '.yaml') {
     return YAML.stringify(swaggerObject);
   }
   return swaggerObject;
-}
+};
 
 /**
  * OpenAPI specification validator does not accept empty values for a few properties.
@@ -70,7 +70,7 @@ function format(swaggerObject, ext) {
  * @param {object} swaggerObject
  * @returns {object} swaggerObject
  */
-function clean(swaggerObject) {
+const clean = (swaggerObject) => {
   for (const prop of ['definitions', 'responses', 'parameters', 'securityDefinitions']) {
     if (hasEmptyProperty(swaggerObject[prop])) {
       delete swaggerObject[prop];
@@ -78,7 +78,7 @@ function clean(swaggerObject) {
   }
 
   return swaggerObject;
-}
+};
 
 /**
  * Parse the swagger object and remove useless properties if necessary.
@@ -86,7 +86,7 @@ function clean(swaggerObject) {
  * @param {object} swaggerObject - Swagger object from parsing the api files.
  * @returns {object} The specification.
  */
-function finalize(swaggerObject, options) {
+const finalize = (swaggerObject, options) => {
   let specification = swaggerObject;
   swaggerParser.parse(swaggerObject, (err, api) => {
     if (!err) {
@@ -99,14 +99,14 @@ function finalize(swaggerObject, options) {
   }
 
   return format(specification, options.format);
-}
+};
 
 /**
  * @param {object} swaggerObject
  * @param {object} annotation
  * @param {string} property
  */
-function organize(swaggerObject, annotation, property) {
+const organize = (swaggerObject, annotation, property) => {
   // Root property on purpose.
   // @see https://github.com/OAI/OpenAPI-Specification/blob/master/proposals/002_Webhooks.md#proposed-solution
   if (property === 'x-webhooks') {
@@ -153,13 +153,13 @@ function organize(swaggerObject, annotation, property) {
     // Paths which are not defined as "paths" property, starting with a slash "/"
     swaggerObject.paths[property] = mergeDeep(swaggerObject.paths[property], annotation[property]);
   }
-}
+};
 
 /**
  * @param {object} options
  * @returns {object} swaggerObject
  */
-function build(options) {
+const build = (options) => {
   YAML.defaultOptions.keepCstNodes = true;
 
   // Get input definition and prepare the specification's skeleton
@@ -292,6 +292,6 @@ function build(options) {
   }
 
   return finalize(specification, options);
-}
+};
 
 module.exports = { prepare, build, organize, finalize, format };
