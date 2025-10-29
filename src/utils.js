@@ -1,7 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const mergeWith = require('lodash.mergewith');
+
+const mergeWith = (target, source, customizer) => {
+  if (typeof target !== 'object' || target === null) return target;
+  if (typeof source !== 'object' || source === null) return target;
+
+  for (const key of Object.keys(source)) {
+    const srcValue = source[key];
+    const tgtValue = target[key];
+
+    const customValue = customizer ? customizer(tgtValue, srcValue, key, target, source) : undefined;
+
+    if (customValue !== undefined) {
+      target[key] = customValue;
+    } else if (Array.isArray(tgtValue) && Array.isArray(srcValue)) {
+      target[key] = tgtValue.concat(srcValue);
+    } else if (typeof tgtValue === 'object' && typeof srcValue === 'object') {
+      target[key] = mergeWith({ ...tgtValue }, srcValue, customizer);
+    } else {
+      target[key] = srcValue;
+    }
+  }
+
+  return target;
+};
 
 /**
  * Converts an array of globs to full paths

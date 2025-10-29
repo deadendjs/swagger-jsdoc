@@ -59,7 +59,7 @@ if (!program.args.length) {
 }
 
 const format = path.extname(output);
-const result = swaggerJsdoc({ swaggerDefinition, apis: program.args, format });
+const result = await swaggerJsdoc({ swaggerDefinition, apis: program.args, format });
 
 if (format === '.json') {
   fs.writeFileSync(output, JSON.stringify(result, null, 2));
