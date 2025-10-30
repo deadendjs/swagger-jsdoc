@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 The library will take the contents of `@openapi` (or `@swagger`) with the following configuration:
 
 ```javascript
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerJsdoc = require('@deadendjs/swagger-jsdoc');
 
 const options = {
   definition: {
@@ -72,7 +72,7 @@ npm install @deadendjs/swagger-jsdoc --save
 By default `swagger-jsdoc` tries to parse all docs to it's best capabilities. If you'd like to you can instruct an Error to be thrown instead if validation failed by setting the options flag `failOnErrors` to `true`. This is for instance useful if you want to verify that your swagger docs validate using a unit test.
 
 ```javascript
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerJsdoc = require('@deadendjs/swagger-jsdoc');
 
 const options = {
   failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.

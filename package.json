@@ -13,6 +13,7 @@
     "prepare": "husky"
   },
   "main": "index.js",
+  "types": "index.d.ts",
   "bin": {
     "swagger-jsdoc": "bin/swagger-jsdoc.js"
   },
