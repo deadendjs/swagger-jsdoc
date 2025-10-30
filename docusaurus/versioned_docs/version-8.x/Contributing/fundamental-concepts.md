@@ -31,7 +31,7 @@ module.exports = {
 The end `swaggerSpecification` will be a result of following:
 
 ```javascript
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerJsdoc = require('@deadendjs/swagger-jsdoc');
 const swaggerDefinition = require('./swaggerDefinition');
 
 const options = {
@@ -39,7 +39,7 @@ const options = {
   apis: ['./src/routes*.js']
 };
 
-const swaggerSpecification = swaggerJsdoc(options);
+const swaggerSpecification = await swaggerJsdoc(options);
 ```
 
 ## File selection patterns

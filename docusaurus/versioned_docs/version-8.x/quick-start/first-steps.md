@@ -11,7 +11,7 @@ The default target specification is 2.0. This provides backwards compatibility f
 In order to create a specification compatibile with 3.0 or higher, i.e. the so called OpenAPI, set this information in the `swaggerDefinition`:
 
 ```diff
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerJsdoc from '@deadendjs/swagger-jsdoc';
 
 const options = {
   definition: {

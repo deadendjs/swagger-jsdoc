@@ -5,6 +5,7 @@
 
 This library reads your [JSDoc](https://jsdoc.app/)-annotated source code and generates an [OpenAPI (Swagger) specification](https://swagger.io/specification/).
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=deadendjs_swagger-jsdoc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=deadendjs_swagger-jsdoc)
 ![CI](https://github.com/deadendjs/swagger-jsdoc/workflows/CI/badge.svg)
 
 ## Getting started

@@ -6,13 +6,11 @@ sidebar_position: 6
 
 ## Types
 
-Please see [`@types/swagger-jsdoc`](https://www.npmjs.com/package/@types/swagger-jsdoc). The package has been created and maintained by one of the original creators of `swagger-jsdoc` [drGrove](https://github.com/drGrove).
+Package include basic (but incomplete) types to get started. Feel free to submit corrections/improvements.
 
 ## The library
 
-It's currently written in Vanilla JavaScript compatible with Node.js 12 or higher. There are no compilation, transpilation or bundling steps. JSDoc comments and annotations have been maintained and published for intelligent editors.
-
-No types definitions are managed or published from this repository.
+It's currently written in Vanilla JavaScript compatible with Node.js 20 or higher. There are no compilation, transpilation or bundling steps. JSDoc comments and annotations have been maintained and published for intelligent editors.
 
 ## Re-using interfaces from source code
 

@@ -1,4 +1,4 @@
-import { statSync, unlinkSync } from 'fs';
+import { statSync, unlinkSync } from 'node:fs';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 

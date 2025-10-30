@@ -1,7 +1,7 @@
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer').themes.github;
+const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -10,7 +10,6 @@ const config = {
   url: 'https://deadendjs.github.io',
   baseUrl: '/swagger-jsdoc',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   organizationName: 'deadendjs',
@@ -19,6 +18,12 @@ const config = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en']
+  },
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn'
+    }
   },
 
   presets: [

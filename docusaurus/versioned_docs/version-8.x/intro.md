@@ -8,7 +8,7 @@ title: Intro
 Document your code and keep a live and reusable OpenAPI (Swagger) specification. This specification can be the core of your API-driven project: generate
 documentation, servers, clients, tests and much more based on the rich [OpenAPI ecosystem of tools](http://swagger.io/).
 
-[![npm Downloads](https://img.shields.io/npm/dm/swagger-jsdoc.svg)](https://www.npmjs.com/package/swagger-jsdoc)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=deadendjs_swagger-jsdoc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=deadendjs_swagger-jsdoc)
 ![CI](https://github.com/deadendjs/swagger-jsdoc/workflows/CI/badge.svg)
 
 ## Goals
