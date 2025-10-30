@@ -86,13 +86,15 @@ const clean = (swaggerObject) => {
  * @param {object} swaggerObject - Swagger object from parsing the api files.
  * @returns {object} The specification.
  */
-const finalize = (swaggerObject, options) => {
+const finalize = async (swaggerObject, options) => {
   let specification = swaggerObject;
-  swaggerParser.parse(swaggerObject, (err, api) => {
-    if (!err) {
-      specification = api;
-    }
-  });
+
+  try {
+    const api = await swaggerParser.parse(swaggerObject);
+    specification = api;
+  } catch {
+    // Swallow errors => this is the current behavior
+  }
 
   if (specification.openapi) {
     specification = clean(specification);
@@ -159,7 +161,7 @@ const organize = (swaggerObject, annotation, property) => {
  * @param {object} options
  * @returns {object} swaggerObject
  */
-const build = (options) => {
+const build = async (options) => {
   YAML.defaultOptions.keepCstNodes = true;
 
   // Get input definition and prepare the specification's skeleton
@@ -291,7 +293,7 @@ const build = (options) => {
     }
   }
 
-  return finalize(specification, options);
+  return await finalize(specification, options);
 };
 
 module.exports = { prepare, build, organize, finalize, format };

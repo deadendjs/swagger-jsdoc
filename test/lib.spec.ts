@@ -7,8 +7,8 @@ describe('Main lib module', () => {
       expect(typeof swaggerJsdoc).toBe('function');
     });
 
-    it('should support custom encoding', () => {
-      const result = swaggerJsdoc({
+    it('should support custom encoding', async () => {
+      const result = await swaggerJsdoc({
         swaggerDefinition: {
           info: {
             title: 'Example weird characters',
@@ -46,7 +46,7 @@ describe('Main lib module', () => {
   describe('Specification v3: OpenAPI', () => {
     const officialExamples = ['callback', 'links', 'petstore'];
 
-    it('should respect default properties', () => {
+    it('should respect default properties', async () => {
       const definition = {
         openapi: '3.0.0',
         servers: [
@@ -79,7 +79,7 @@ describe('Main lib module', () => {
         apis: []
       };
 
-      expect(swaggerJsdoc(options)).toEqual({
+      await expect(swaggerJsdoc(options)).resolves.toEqual({
         openapi: '3.0.0',
         servers: [
           {
@@ -110,8 +110,8 @@ describe('Main lib module', () => {
       });
     });
 
-    officialExamples.forEach((example) => {
-      it(`Example: ${example}`, () => {
+    for (const example of officialExamples) {
+      it(`Example: ${example}`, async () => {
         const title = `Sample specification testing ${example}`;
         const examplePath = `${__dirname}/files/v3/${example}`;
 
@@ -130,9 +130,9 @@ describe('Main lib module', () => {
           apis: [`${examplePath}/api.js`]
         };
 
-        const specification = swaggerJsdoc(options);
+        const specification = await swaggerJsdoc(options);
         expect(specification).toEqual(referenceSpecification);
       });
-    });
+    }
   });
 });

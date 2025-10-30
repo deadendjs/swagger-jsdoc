@@ -14,14 +14,13 @@
   },
   "main": "index.js",
   "bin": {
-    "swagger-jsdoc": "./bin/swagger-jsdoc.js"
+    "swagger-jsdoc": "bin/swagger-jsdoc.js"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.1",
     "commander": "^14.0.0",
     "doctrine": "3.0.0",
     "glob": "^11.0.2",
-    "lodash.mergewith": "^4.6.2",
     "yaml": "2.0.0-1"
   },
   "devDependencies": {
@@ -46,7 +45,7 @@
   "homepage": "https://github.com/deadendjs/swagger-jsdoc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deadendjs/swagger-jsdoc.git"
+    "url": "git+https://github.com/deadendjs/swagger-jsdoc.git"
   },
   "keywords": [
     "swagger",
@@ -56,9 +55,6 @@
   "author": "https://github.com/deadendjs/swagger-jsdoc/graphs/contributors",
   "bugs": {
     "url": "https://github.com/deadendjs/swagger-jsdoc/issues"
-  },
-  "resolutions": {
-    "minimist": ">=1.2.3"
   },
   "lint-staged": {
     "*.{js,json,md,yml,yaml}": [

@@ -3,8 +3,8 @@ import webhooksSingleSpecification from '../examples/extensions/x-webhooks-singl
 import webhooksMultipleSpecification from '../examples/extensions/x-webhooks-multiple-reference-specification.json';
 
 describe('Example for using extensions', () => {
-  it('should support single entry in x-webhooks', () => {
-    const result = swaggerJsdoc({
+  it('should support single entry in x-webhooks', async () => {
+    const result = await swaggerJsdoc({
       swaggerDefinition: {
         info: {
           title: 'Example with extensions',
@@ -16,8 +16,8 @@ describe('Example for using extensions', () => {
     expect(result).toEqual(webhooksSingleSpecification);
   });
 
-  it('should support multiple entries in x-webhooks', () => {
-    const result = swaggerJsdoc({
+  it('should support multiple entries in x-webhooks', async () => {
+    const result = await swaggerJsdoc({
       swaggerDefinition: {
         info: {
           title: 'Example with extensions',

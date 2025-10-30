@@ -3,16 +3,16 @@ const { build } = require('./specification');
 /**
  * Generates the specification.
  * @param {object} options - Configuration options
- * @param {string} options.encoding Optional, passed to readFileSync options. Defaults to 'utf8'.
- * @param {boolean} options.failOnErrors Whether or not to throw when parsing errors. Defaults to false.
- * @param {boolean} options.verbose Whether the swagger snippet containing each error should be included in print/throws. Defaults to false.
- * @param {string} options.format Optional, defaults to '.json' - target file format '.yml' or '.yaml'.
- * @param {object} options.swaggerDefinition
- * @param {object} options.definition
+ * @param {string} [options.encoding=utf8] Optional, passed to readFileSync options. Defaults to 'utf8'.
+ * @param {boolean} [options.failOnErrors=false] Whether or not to throw when parsing errors. Defaults to false.
+ * @param {boolean} [options.verbose=false] Whether the swagger snippet containing each error should be included in print/throws. Defaults to false.
+ * @param {string} [options.format=json] Optional, defaults to '.json' - target file format '.yml' or '.yaml'.
+ * @param {object} [options.swaggerDefinition] Set this, or definition
+ * @param {object} [options.definition] Set this, or swaggerDefinition
  * @param {array} options.apis
- * @returns {object} Output specification
+ * @returns {Promise<object>} Output specification
  */
-module.exports = (options) => {
+module.exports = async (options) => {
   if (!options) {
     throw new Error(`Missing or invalid input: 'options' is required`);
   }
@@ -25,5 +25,5 @@ module.exports = (options) => {
     throw new Error(`Missing or invalid input: 'options.apis' is required and it should be an array.`);
   }
 
-  return build(options);
+  return await build(options);
 };

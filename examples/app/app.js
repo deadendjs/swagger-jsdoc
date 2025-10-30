@@ -8,39 +8,36 @@ const PORT = process.env.PORT || 3000;
 
 // Initialize express
 const app = express();
-app.use(express.json()); // To support JSON-encoded bodies
-app.use(
-  express.urlencoded({
-    // To support URL-encoded bodies
-    extended: true
-  })
-);
-
-// Swagger definition
-// You can set every attribute except paths and swagger
-// https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md
-const swaggerDefinition = {
-  info: {
-    // API informations (required)
-    title: 'Hello World', // Title (required)
-    version: '1.0.0', // Version (required)
-    description: 'A sample API' // Description (optional)
-  },
-  host: `localhost:${PORT}`, // Host (optional)
-  basePath: '/' // Base path (optional)
-};
-
-// Options for the swagger docs
-const options = {
-  // Import swaggerDefinitions
-  swaggerDefinition,
-  // Path to the API docs
-  // Note that this path is relative to the current directory from which the Node.js is ran, not the application itself.
-  apis: ['./examples/app/routes*.js', './examples/app/parameters.yaml']
-};
+// To support JSON-encoded bodies
+app.use(express.json());
+// To support URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
 // Initialize swagger-jsdoc -> returns validated swagger spec in json format
-const swaggerSpec = swaggerJsdoc(options);
+let swaggerSpec;
+const setupApp = async () => {
+  // Swagger definition
+  // You can set every attribute except paths and swagger
+  // https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md
+  const swaggerDefinition = {
+    info: {
+      // API informations (required)
+      title: 'Hello World', // Title (required)
+      version: '1.0.0', // Version (required)
+      description: 'A sample API' // Description (optional)
+    },
+    host: `localhost:${PORT}`, // Host (optional)
+    basePath: '/' // Base path (optional)
+  };
+
+  swaggerSpec = await swaggerJsdoc({
+    // Import swaggerDefinitions
+    swaggerDefinition,
+    // Path to the API docs
+    // Note that this path is relative to the current directory from which the Node.js is ran, not the application itself.
+    apis: ['./examples/app/routes*.js', './examples/app/parameters.yaml']
+  });
+};
 
 // Serve swagger docs the way you like (Recommendation: swagger-tools)
 app.get('/api-docs.json', (req, res) => {
@@ -60,4 +57,4 @@ const server = app.listen(PORT, () => {
   console.log('Example app listening at http://%s:%s', host, port);
 });
 
-module.exports = { app, server };
+module.exports = { app, setupApp, server };

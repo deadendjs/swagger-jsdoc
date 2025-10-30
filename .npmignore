@@ -1,4 +1,7 @@
 .editorconfig
+.vscode
+.husky
+.devcontainer
 .nvmrc
 .git*
 .eslintignore
@@ -10,7 +13,11 @@
 external.jsdoc
 examples/
 docs/
+docusaurus/
 jsdoc/
 test/
 coverage/
-README.md
+jest.config.ts
+eslint.config.mjs
+tsconfig.json
+CHANGELOG.old.md
