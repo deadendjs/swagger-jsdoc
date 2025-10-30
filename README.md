@@ -5,7 +5,6 @@
 
 This library reads your [JSDoc](https://jsdoc.app/)-annotated source code and generates an [OpenAPI (Swagger) specification](https://swagger.io/specification/).
 
-[![npm Downloads](https://img.shields.io/npm/dm/swagger-jsdoc.svg)](https://www.npmjs.com/package/swagger-jsdoc)
 ![CI](https://github.com/deadendjs/swagger-jsdoc/workflows/CI/badge.svg)
 
 ## Getting started
