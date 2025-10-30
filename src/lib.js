@@ -3,12 +3,12 @@ const { build } = require('./specification');
 /**
  * Generates the specification.
  * @param {object} options - Configuration options
- * @param {string} options.encoding Optional, passed to readFileSync options. Defaults to 'utf8'.
- * @param {boolean} options.failOnErrors Whether or not to throw when parsing errors. Defaults to false.
- * @param {boolean} options.verbose Whether the swagger snippet containing each error should be included in print/throws. Defaults to false.
- * @param {string} options.format Optional, defaults to '.json' - target file format '.yml' or '.yaml'.
- * @param {object} options.swaggerDefinition
- * @param {object} options.definition
+ * @param {string} [options.encoding=utf8] Optional, passed to readFileSync options. Defaults to 'utf8'.
+ * @param {boolean} [options.failOnErrors=false] Whether or not to throw when parsing errors. Defaults to false.
+ * @param {boolean} [options.verbose=false] Whether the swagger snippet containing each error should be included in print/throws. Defaults to false.
+ * @param {string} [options.format=json] Optional, defaults to '.json' - target file format '.yml' or '.yaml'.
+ * @param {object} [options.swaggerDefinition] Set this, or definition
+ * @param {object} [options.definition] Set this, or swaggerDefinition
  * @param {array} options.apis
  * @returns {Promise<object>} Output specification
  */

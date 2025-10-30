@@ -1,5 +1,8 @@
 # swagger-jsdoc
 
+> [!NOTE]
+> This fork is mostly ment to keep dependencies updated, since the original repo has been inactive for a while. But if you spot issues, feel free to submit PR with breaking test (in case of code issues) and fix.
+
 This library reads your [JSDoc](https://jsdoc.app/)-annotated source code and generates an [OpenAPI (Swagger) specification](https://swagger.io/specification/).
 
 [![npm Downloads](https://img.shields.io/npm/dm/swagger-jsdoc.svg)](https://www.npmjs.com/package/swagger-jsdoc)
@@ -84,7 +87,7 @@ const options = {
   apis: ['./src/routes*.js']
 };
 
-const openapiSpecification = swaggerJsdoc(options);
+const openapiSpecification = await swaggerJsdoc(options);
 ```
 
 ## Documentation

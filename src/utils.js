@@ -2,28 +2,65 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
+/**
+ * Helper to check if a value is a plain object (not null, not an array).
+ */
+const isObject = (value) => {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+};
+
+/**
+ * A custom merge function that combines deep object merging with
+ * a "defaults-like" behavior of ignoring source values that are null or undefined.
+ * It also recursively attempts to merge elements within arrays by index.
+ */
 const mergeWith = (target, source, customizer) => {
-  if (typeof target !== 'object' || target === null) return target;
-  if (typeof source !== 'object' || source === null) return target;
+  let merged = target ?? {};
+
+  if (!isObject(merged)) {
+    return !target && isObject(source) ? source : target;
+  }
+
+  if (!source || typeof source !== 'object') {
+    return merged;
+  }
 
   for (const key of Object.keys(source)) {
     const srcValue = source[key];
-    const tgtValue = target[key];
+    const tgtValue = merged[key];
 
-    const customValue = customizer ? customizer(tgtValue, srcValue, key, target, source) : undefined;
+    if ((srcValue === null || srcValue === undefined) && tgtValue !== undefined) {
+      continue;
+    }
+
+    const customValue = customizer ? customizer(tgtValue, srcValue, key, merged, source) : undefined;
 
     if (customValue !== undefined) {
-      target[key] = customValue;
+      merged[key] = customValue;
     } else if (Array.isArray(tgtValue) && Array.isArray(srcValue)) {
-      target[key] = tgtValue.concat(srcValue);
-    } else if (typeof tgtValue === 'object' && typeof srcValue === 'object') {
-      target[key] = mergeWith({ ...tgtValue }, srcValue, customizer);
+      const newArray = [];
+      const maxLength = Math.max(tgtValue.length, srcValue.length);
+      for (let i = 0; i < maxLength; i++) {
+        const itemTgt = tgtValue[i];
+        const itemSrc = srcValue[i];
+
+        if (isObject(itemTgt) && isObject(itemSrc)) {
+          newArray.push(mergeWith(itemTgt, itemSrc, customizer));
+        } else if (itemTgt !== undefined) {
+          newArray.push(mergeWith(itemTgt, itemSrc, customizer));
+        } else {
+          newArray.push(itemSrc);
+        }
+      }
+      merged[key] = newArray;
+    } else if (isObject(tgtValue) && isObject(srcValue)) {
+      merged[key] = mergeWith(tgtValue, srcValue, customizer);
     } else {
-      target[key] = srcValue;
+      merged[key] = srcValue;
     }
   }
 
-  return target;
+  return merged;
 };
 
 /**
@@ -153,13 +190,16 @@ function loadDefinition(defPath, swaggerDefinition) {
  * @param {object} second the second object to get merged
  */
 function mergeDeep(first, second) {
-  return mergeWith({}, first, second, (a, b) => (b === null ? a : undefined));
+  return mergeWith(first, second, (a, b) => (b === null ? a : undefined));
 }
 
-module.exports.mergeDeep = mergeDeep;
-module.exports.convertGlobPaths = convertGlobPaths;
-module.exports.hasEmptyProperty = hasEmptyProperty;
-module.exports.extractYamlFromJsDoc = extractYamlFromJsDoc;
-module.exports.extractAnnotations = extractAnnotations;
-module.exports.isTagPresentInTags = isTagPresentInTags;
-module.exports.loadDefinition = loadDefinition;
+module.exports = {
+  mergeWith,
+  mergeDeep,
+  convertGlobPaths,
+  hasEmptyProperty,
+  extractYamlFromJsDoc,
+  extractAnnotations,
+  isTagPresentInTags,
+  loadDefinition
+};

@@ -14,7 +14,7 @@
   },
   "main": "index.js",
   "bin": {
-    "swagger-jsdoc": "./bin/swagger-jsdoc.js"
+    "swagger-jsdoc": "bin/swagger-jsdoc.js"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.1",
@@ -45,7 +45,7 @@
   "homepage": "https://github.com/deadendjs/swagger-jsdoc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deadendjs/swagger-jsdoc.git"
+    "url": "git+https://github.com/deadendjs/swagger-jsdoc.git"
   },
   "keywords": [
     "swagger",

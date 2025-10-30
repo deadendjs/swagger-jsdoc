@@ -21,13 +21,13 @@ describe('Specification module', () => {
       expect(typeof specModule.build).toBe('function');
     });
 
-    it('should return right object', () => {
-      expect(
-        specModule.build({
-          swaggerDefinition: {},
-          apis: ['./**/*/external/*.yml']
-        })
-      ).toEqual({
+    it('should return right object', async () => {
+      const result = await specModule.build({
+        swaggerDefinition: {},
+        apis: ['./**/*/external/*.yml']
+      });
+
+      expect(result).toEqual({
         swagger: '2.0',
         paths: {},
         definitions: {},
@@ -43,7 +43,7 @@ describe('Specification module', () => {
       });
     });
 
-    it('should not throw an error if file cannot be open, and failOnErrors is false', () => {
+    it('should not throw an error if file cannot be open, and failOnErrors is false', async () => {
       readFileSyncSpy.mockImplementation((filePath, options) => {
         if (filePath === path.resolve(__dirname, './files/v2/wrong_syntax.yaml')) {
           throw new Error('ENOENT: no such file or directory');
@@ -52,16 +52,16 @@ describe('Specification module', () => {
         return originalReadFileSync(filePath, options);
       });
 
-      expect(
-        specModule.build({
-          swaggerDefinition: {},
-          apis: [
-            path.resolve(__dirname, './files/v2/wrong_syntax.yaml'),
-            path.resolve(__dirname, './files/v2/api_definition.yaml')
-          ],
-          failOnErrors: false
-        })
-      ).toEqual({
+      const result = await specModule.build({
+        swaggerDefinition: {},
+        apis: [
+          path.resolve(__dirname, './files/v2/wrong_syntax.yaml'),
+          path.resolve(__dirname, './files/v2/api_definition.yaml')
+        ],
+        failOnErrors: false
+      });
+
+      expect(result).toEqual({
         swagger: '2.0',
         paths: {
           info: {
@@ -78,28 +78,27 @@ describe('Specification module', () => {
       });
     });
 
-    it('should throw an error if file cannot be open, and failOnErrors is true', () => {
+    it('should throw an error if file cannot be open, and failOnErrors is true', async () => {
       readFileSyncSpy.mockImplementation(() => {
         throw new Error('ENOENT: no such file or directory');
       });
 
-      expect(() => {
-        specModule.build({
-          swaggerDefinition: {},
-          apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
-          failOnErrors: true
-        });
-      }).toThrow();
+      const config = {
+        swaggerDefinition: {},
+        apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
+        failOnErrors: true
+      };
+      await expect(specModule.build(config)).rejects.toThrow();
     });
 
-    it('should have filepath in error (yaml)', () => {
-      expect(() => {
-        specModule.build({
-          swaggerDefinition: {},
-          apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
-          failOnErrors: true
-        });
-      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong_syntax.yaml')} :
+    it('should have filepath in error (yaml)', async () => {
+      const config = {
+        swaggerDefinition: {},
+        apis: [path.resolve(__dirname, './files/v2/wrong_syntax.yaml')],
+        failOnErrors: true
+      };
+
+      await expect(specModule.build(config)).rejects.toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong_syntax.yaml')} :
 YAMLSemanticError: The !!! tag handle is non-default and was not declared. at line 2, column 3:
 
   !!!title: Hello World
@@ -111,14 +110,13 @@ YAMLSemanticError: Implicit map keys need to be on a single line at line 2, colu
   ^^^^^^^^^^^^^^^^^^^^^…\n`);
     });
 
-    it('should have filepath in error (jsdoc)', () => {
-      expect(() => {
-        specModule.build({
-          swaggerDefinition: {},
-          apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
-          failOnErrors: true
-        });
-      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
+    it('should have filepath in error (jsdoc)', async () => {
+      const config = {
+        swaggerDefinition: {},
+        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
+        failOnErrors: true
+      };
+      await expect(specModule.build(config)).rejects.toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
 YAMLSyntaxError: All collection items must start at the same column at line 1, column 1:
 
 /invalid_yaml:
@@ -130,15 +128,16 @@ YAMLSemanticError: Implicit map keys need to be followed by map values at line 3
   ^^^\n`);
     });
 
-    it('should support a flag for verbose errors', () => {
-      expect(() => {
-        specModule.build({
-          swaggerDefinition: {},
-          apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
-          failOnErrors: true,
-          verbose: true
-        });
-      }).toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
+    it('should support a flag for verbose errors', async () => {
+      const config = {
+        swaggerDefinition: {},
+        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
+        failOnErrors: true,
+        verbose: true
+      };
+
+      await expect(specModule.build(config)
+      ).rejects.toThrow(`Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :
 YAMLSyntaxError: All collection items must start at the same column at line 1, column 1:
 
 /invalid_yaml:
