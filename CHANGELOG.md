@@ -13,6 +13,7 @@ Changes in the original version can be found from CHANGELOG.old.md file
 - Drop dependencies: npm-run-all and lodash.mergewith
 - Dependency updates
 - Added dev container support
+- Breaking change: swaggerJsdoc() now returns a promise
 
 ## [7.0.0] - version skipped
 

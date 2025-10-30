@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
+const fs = require('node:fs');
 const path = require('path');
 const { program } = require('commander');
 
@@ -59,12 +59,17 @@ if (!program.args.length) {
 }
 
 const format = path.extname(output);
-const result = await swaggerJsdoc({ swaggerDefinition, apis: program.args, format });
+swaggerJsdoc({ swaggerDefinition, apis: program.args, format }).then((result, err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
 
-if (format === '.json') {
-  fs.writeFileSync(output, JSON.stringify(result, null, 2));
-} else {
-  fs.writeFileSync(output, result);
-}
+  if (format === '.json') {
+    fs.writeFileSync(output, JSON.stringify(result, null, 2));
+  } else {
+    fs.writeFileSync(output, result);
+  }
 
-console.log('Swagger specification is ready.');
+  console.log('Swagger specification is ready.');
+});
