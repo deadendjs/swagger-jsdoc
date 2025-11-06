@@ -2,7 +2,12 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
-## [8.0.0] - 2025-xx-xx
+## [8.0.1] - 2025-11-06
+
+- Update dependencies
+- Improve object cloning method
+
+## [8.0.0] - 2025-10-30
 
 - Dropped support for node versions below 20
 - Updated docusaur to latest 2.x version and published docs in github pages

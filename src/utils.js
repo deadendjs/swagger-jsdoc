@@ -26,6 +26,9 @@ const mergeWith = (target, source, customizer) => {
   }
 
   for (const key of Object.keys(source)) {
+    // Skip unsafe key
+    if (key === '__proto__') continue;
+
     const srcValue = source[key];
     const tgtValue = merged[key];
 
