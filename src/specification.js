@@ -158,12 +158,40 @@ const organize = (swaggerObject, annotation, property) => {
 };
 
 /**
+ * @param {array} yamlDocsAnchors
+ * @param {array} yamlDocsErrors
+ * @param {array} yamlDocsReady
+ * @param {string} annotation
+ * @param {string} filePath
+ */
+const parseYamlDocument = (yamlDocsAnchors, yamlDocsErrors, yamlDocsReady, annotation, filePath) => {
+  const parsed = Object.assign(YAML.parseDocument(annotation), {
+    filePath,
+    srcAnnotation: annotation
+  });
+  const anchors = parsed.anchors.getNames();
+
+  if (anchors.length) {
+    for (const anchor of anchors) {
+      yamlDocsAnchors.set(anchor, parsed);
+    }
+  } else if (parsed.errors && parsed.errors.length) {
+    // console.log(filePath, parsed.errors);
+    // Attach the relevent yaml section to the error for verbose logging
+    parsed.errors.forEach((err) => {
+      err.annotation = annotation;
+    });
+    yamlDocsErrors.push(parsed);
+  } else {
+    yamlDocsReady.push(parsed);
+  }
+};
+
+/**
  * @param {object} options
  * @returns {object} swaggerObject
  */
 const build = async (options) => {
-  YAML.defaultOptions.keepCstNodes = true;
-
   // Get input definition and prepare the specification's skeleton
   const definition = options.swaggerDefinition || options.definition;
   const specification = prepare(definition);
@@ -175,52 +203,17 @@ const build = async (options) => {
     try {
       const { yaml: yamlAnnotations, jsdoc: jsdocAnnotations } = extractAnnotations(filePath, options.encoding);
 
-      if (yamlAnnotations.length) {
-        for (const annotation of yamlAnnotations) {
-          const parsed = Object.assign(YAML.parseDocument(annotation), {
-            filePath
-          });
+      yamlAnnotations.forEach((annotation) =>
+        parseYamlDocument(yamlDocsAnchors, yamlDocsErrors, yamlDocsReady, annotation, filePath)
+      );
 
-          const anchors = parsed.anchors.getNames();
-          if (anchors.length) {
-            for (const anchor of anchors) {
-              yamlDocsAnchors.set(anchor, parsed);
-            }
-          } else if (parsed.errors && parsed.errors.length) {
-            // Attach the relevent yaml section to the error for verbose logging
-            parsed.errors.forEach((err) => {
-              err.annotation = annotation;
-            });
-            yamlDocsErrors.push(parsed);
-          } else {
-            yamlDocsReady.push(parsed);
-          }
-        }
-      }
-
-      if (jsdocAnnotations.length) {
-        for (const annotation of jsdocAnnotations) {
-          const jsDocComment = doctrine.parse(annotation, { unwrap: true });
-          for (const doc of extractYamlFromJsDoc(jsDocComment)) {
-            const parsed = Object.assign(YAML.parseDocument(doc), { filePath });
-
-            const anchors = parsed.anchors.getNames();
-            if (anchors.length) {
-              for (const anchor of anchors) {
-                yamlDocsAnchors.set(anchor, parsed);
-              }
-            } else if (parsed.errors && parsed.errors.length) {
-              // Attach the relevent yaml section to the error for verbose logging
-              parsed.errors.forEach((err) => {
-                err.annotation = doc;
-              });
-              yamlDocsErrors.push(parsed);
-            } else {
-              yamlDocsReady.push(parsed);
-            }
-          }
-        }
-      }
+      jsdocAnnotations.forEach((annotation) => {
+        const jsDocComment = doctrine.parse(annotation, { unwrap: true });
+        const yamlAnnotations = extractYamlFromJsDoc(jsDocComment);
+        yamlAnnotations.forEach((annotation) =>
+          parseYamlDocument(yamlDocsAnchors, yamlDocsErrors, yamlDocsReady, annotation, filePath)
+        );
+      });
     } catch (err) {
       if (options.failOnErrors) {
         console.error(`Error parsing ${filePath}: ${err.message}`);
@@ -232,24 +225,32 @@ const build = async (options) => {
   if (yamlDocsErrors.length) {
     for (const docWithErr of yamlDocsErrors) {
       const errsToDelete = [];
-      docWithErr.errors.forEach((error, index) => {
-        if (error.name === 'YAMLReferenceError') {
-          // This should either be a smart regex or ideally a YAML library method using the error.range.
-          // The following works with both pretty and not pretty errors.
-          const refErr = error.message
-            .split('Aliased anchor not found: ')
-            .filter((a) => a)
-            .join('')
-            .split(' at line')[0];
-          const anchor = yamlDocsAnchors.get(refErr);
-          const anchorString = anchor.cstNode.toString();
-          const originalString = docWithErr.cstNode.toString();
-          const readyDocument = YAML.parseDocument(`${anchorString}\n${originalString}`);
 
-          yamlDocsReady.push(readyDocument);
-          errsToDelete.push(index);
-        }
+      const anchorAnnotation = [];
+      docWithErr.errors.forEach((error, index) => {
+        if (error.name !== 'YAMLParseError') return;
+
+        // This should either be a smart regex or ideally a YAML library method using the error.range.
+        // The following works with both pretty and not pretty errors.
+        const refErr = error.message
+          .split('Aliased anchor not found: ')
+          .filter((a) => a)
+          .join('')
+          .split(' at line')[0];
+
+        const anchor = yamlDocsAnchors.get(refErr);
+        if (!anchor) return;
+
+        anchorAnnotation.push(anchor.toString());
+        errsToDelete.push(index);
       });
+
+      const originalString = docWithErr.srcAnnotation;
+      const newDocument = `${anchorAnnotation.join('\n')}\n${originalString}`;
+
+      const readyDocument = YAML.parseDocument(newDocument);
+      yamlDocsReady.push(readyDocument);
+
       // reverse sort the deletion array so we always delete from the end
       errsToDelete.sort((a, b) => b - a);
 
