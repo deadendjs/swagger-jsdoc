@@ -2,7 +2,7 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
-## [8.1.0] - 2025-xx-xx
+## [8.1.0] - 2026-03-12
 
 - Updated dependencies due to security issues
 - Small bump for yaml library (2.0.0-1 to 2.0.0-4). Note: This changes some error messages and might affect anchor handling
