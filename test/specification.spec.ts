@@ -101,18 +101,20 @@ describe('Specification module', () => {
       // Grab error, and remove duplicate spaces/linefeeds
       let errMsg = '';
       try {
-        await specModule.build(config)
+        await specModule.build(config);
       } catch (err) {
         errMsg = `${err}`.replaceAll(/\s+/gi, ' ').replaceAll(/\n/gi, '').trim();
       }
 
       expect(errMsg).toEqual(
         `Error: Error in ${path.resolve(__dirname, './files/v2/wrong_syntax.yaml')} :` +
-        ' YAMLParseError: Could not resolve tag: !!!title: at line 2, column 13:' +
-        ' !!!title: Hello World' +
-        ' ^' +
-        ' YAMLParseError: Implicit keys need to be on a single line at line 2, column 23:' +
-        ' !!!title: Hello World' + ' ^');
+          ' YAMLParseError: Could not resolve tag: !!!title: at line 2, column 13:' +
+          ' !!!title: Hello World' +
+          ' ^' +
+          ' YAMLParseError: Implicit keys need to be on a single line at line 2, column 23:' +
+          ' !!!title: Hello World' +
+          ' ^'
+      );
     });
 
     it('should have filepath in error (jsdoc)', async () => {
@@ -125,19 +127,19 @@ describe('Specification module', () => {
       // Grab error, and remove duplicate spaces/linefeeds
       let errMsg = '';
       try {
-        await specModule.build(config)
+        await specModule.build(config);
       } catch (err) {
         errMsg = `${err}`.replaceAll(/\s+/gi, ' ').replaceAll(/\n/gi, '').trim();
       }
 
       expect(errMsg).toEqual(
         `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :` +
-        ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
-        ' - foo bar' +
-        ' ^' +
-        ' YAMLParseError: Implicit map keys need to be followed by map values at line 3, column 3:' +
-        ' - foo bar' +
-        ' ^'
+          ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
+          ' - foo bar' +
+          ' ^' +
+          ' YAMLParseError: Implicit map keys need to be followed by map values at line 3, column 3:' +
+          ' - foo bar' +
+          ' ^'
       );
     });
 
@@ -152,20 +154,20 @@ describe('Specification module', () => {
       // Grab error, and remove duplicate spaces/linefeeds
       let errMsg = '';
       try {
-        await specModule.build(config)
+        await specModule.build(config);
       } catch (err) {
         errMsg = `${err}`.replaceAll(/\s+/gi, ' ').replaceAll(/\n/gi, '').trim();
       }
 
       expect(errMsg).toEqual(
         `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :` +
-        ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
-        ' - foo bar' +
-        ' ^' +
-        ' Imbedded within: ``` /invalid_yaml: - foo bar ```' +
-        ' YAMLParseError: Implicit map keys need to be followed by map values at line 3, column 3:' +
-        ' - foo bar ^' +
-        ' Imbedded within: ``` /invalid_yaml: - foo bar ```'
+          ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
+          ' - foo bar' +
+          ' ^' +
+          ' Imbedded within: ``` /invalid_yaml: - foo bar ```' +
+          ' YAMLParseError: Implicit map keys need to be followed by map values at line 3, column 3:' +
+          ' - foo bar ^' +
+          ' Imbedded within: ``` /invalid_yaml: - foo bar ```'
       );
     });
   });
