@@ -114,7 +114,7 @@ function extractAnnotations(filePath, encoding = 'utf8') {
   const csDocRegex = /###([\s\S]*?)###/gm;
   const yaml = [];
   const jsdoc = [];
-  let regexResults = null;
+  let regexResults;
 
   switch (ext) {
     case '.yml':

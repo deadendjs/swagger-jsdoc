@@ -2,6 +2,12 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
+## [8.1.1] - 2026-xx-xx
+
+- Update glob from 11.x to 12.x (this removes nag from install)
+- Switch from jest to vitest to improve compatibility with typescript
+- Update dependencies for docusaurus (doesn't affect app functionality)
+
 ## [8.1.0] - 2026-03-12
 
 - Updated dependencies due to security issues

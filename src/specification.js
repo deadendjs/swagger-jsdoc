@@ -217,7 +217,7 @@ const build = async (options) => {
     } catch (err) {
       if (options.failOnErrors) {
         console.error(`Error parsing ${filePath}: ${err.message}`);
-        throw new Error(err);
+        throw new Error(err.message, { cause: err });
       }
     }
   }

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 
 import * as specModule from '../src/specification.js';
 import swaggerObject from './files/v2/swaggerObject.json';
@@ -10,7 +10,7 @@ let readFileSyncSpy;
 describe('Specification module', () => {
   describe('build', () => {
     beforeEach(() => {
-      readFileSyncSpy = jest.spyOn(fs, 'readFileSync');
+      readFileSyncSpy = vi.spyOn(fs, 'readFileSync');
     });
 
     afterEach(() => {
