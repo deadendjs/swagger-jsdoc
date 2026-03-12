@@ -120,7 +120,7 @@ describe('Specification module', () => {
     it('should have filepath in error (jsdoc)', async () => {
       const config = {
         swaggerDefinition: {},
-        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
+        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-indentation.js')],
         failOnErrors: true
       };
 
@@ -133,7 +133,7 @@ describe('Specification module', () => {
       }
 
       expect(errMsg).toEqual(
-        `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :` +
+        `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-indentation.js')} :` +
           ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
           ' - foo bar' +
           ' ^' +
@@ -146,7 +146,7 @@ describe('Specification module', () => {
     it('should support a flag for verbose errors', async () => {
       const config = {
         swaggerDefinition: {},
-        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')],
+        apis: [path.resolve(__dirname, './files/v2/wrong-yaml-indentation.js')],
         failOnErrors: true,
         verbose: true
       };
@@ -160,7 +160,7 @@ describe('Specification module', () => {
       }
 
       expect(errMsg).toEqual(
-        `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-identation.js')} :` +
+        `Error: Error in ${path.resolve(__dirname, './files/v2/wrong-yaml-indentation.js')} :` +
           ' YAMLParseError: All mapping items must start at the same column at line 3, column 1:' +
           ' - foo bar' +
           ' ^' +

@@ -97,7 +97,7 @@ describe('CLI module', () => {
   });
 
   it('should report YAML documents with errors', async () => {
-    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs test/files/v2/wrong-yaml-identation.js`);
+    const result = await sh(`${bin} -d examples/app/swaggerDefinition.cjs test/files/v2/wrong-yaml-indentation.js`);
 
     expect(result.stdout).toContain('Not all input has been taken into account at your final specification.');
     expect(result.stderr).toMatchSnapshot();
