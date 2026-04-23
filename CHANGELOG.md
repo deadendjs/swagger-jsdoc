@@ -2,6 +2,10 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
+## [8.1.2] - 2026-xx-xx
+
+- Update dependencies for both library and docusaurus
+
 ## [8.1.1] - 2026-03-13
 
 - Update glob from 11.x to 12.x (this removes nag from install)
