@@ -2,7 +2,7 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
-## [8.1.2] - 2026-xx-xx
+## [8.1.2] - 2026-04-23
 
 - Update typescript from 5.x to 6.x (affects only unit testing)
 - Update dependencies for both library and docusaurus
