@@ -1,4 +1,3 @@
-const doctrine = require('doctrine');
 const swaggerParser = require('@apidevtools/swagger-parser');
 const YAML = require('yaml');
 
@@ -8,7 +7,8 @@ const {
   extractAnnotations,
   mergeDeep,
   extractYamlFromJsDoc,
-  isTagPresentInTags
+  isTagPresentInTags,
+  parseJsDocComment
 } = require('./utils');
 
 /**
@@ -139,6 +139,11 @@ const organize = (swaggerObject, annotation, property) => {
         annotation[property][definition]
       );
     }
+  } else if (property === 'security') {
+    const { security } = annotation;
+    if (Array.isArray(security)) {
+      swaggerObject.security = (swaggerObject.security || []).concat(security);
+    }
   } else if (property === 'tags') {
     const { tags } = annotation;
 
@@ -208,7 +213,7 @@ const build = async (options) => {
       );
 
       jsdocAnnotations.forEach((annotation) => {
-        const jsDocComment = doctrine.parse(annotation, { unwrap: true });
+        const jsDocComment = parseJsDocComment(annotation);
         const yamlAnnotations = extractYamlFromJsDoc(jsDocComment);
         yamlAnnotations.forEach((annotation) =>
           parseYamlDocument(yamlDocsAnchors, yamlDocsErrors, yamlDocsReady, annotation, filePath)

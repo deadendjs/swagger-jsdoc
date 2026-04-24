@@ -262,6 +262,38 @@ describe('Specification module', () => {
         IllegalInput: { description: 'Illegal input for operation.' }
       });
     });
+
+    it('should place root-level "security" at root, not inside paths', () => {
+      const v3Object = {
+        openapi: '3.0.0',
+        info: { title: 'Test', version: '1.0.0' },
+        paths: {},
+        components: {},
+        tags: []
+      };
+      specModule.organize(v3Object, { security: [{ bearerAuth: [] }] }, 'security');
+
+      // Original object didn't have security attribute on purpose, so this makes the type checking to fault
+      // @ts-expect-error
+      expect(v3Object.security).toEqual([{ bearerAuth: [] }]);
+      expect((v3Object.paths as Record<string, unknown>).security).toBeUndefined();
+    });
+
+    it('should merge multiple root-level "security" annotations', () => {
+      const v3Object = {
+        openapi: '3.0.0',
+        info: { title: 'Test', version: '1.0.0' },
+        paths: {},
+        components: {},
+        tags: []
+      };
+      specModule.organize(v3Object, { security: [{ bearerAuth: [] }] }, 'security');
+      specModule.organize(v3Object, { security: [{ apiKey: [] }] }, 'security');
+
+      // Original object didn't have security attribute on purpose, so this makes the type checking to fault
+      // @ts-expect-error
+      expect(v3Object.security).toEqual([{ bearerAuth: [] }, { apiKey: [] }]);
+    });
   });
 
   describe('format', () => {

@@ -87,8 +87,48 @@ function hasEmptyProperty(obj) {
 }
 
 /**
+ * Minimal JSDoc comment parser replacing the abandoned `doctrine` package.
+ * Strips the /** ... *\/ wrapper and leading `*` from each line, then splits
+ * on `@tag` markers and returns `{ tags }` with `title` and `description`.
+ * @param {string} annotation - Raw JSDoc comment string
+ * @returns {{ tags: Array<{ title: string, description: string }> }}
+ */
+function parseJsDocComment(annotation) {
+  const unwrapped = annotation
+    .replace(/^\/\*\*/, '')
+    .replace(/\*\/$/, '')
+    .split('\n')
+    .map((line) => line.replace(/^\s*\*\s?/, ''))
+    .join('\n');
+
+  const tags = [];
+  const lines = unwrapped.split('\n');
+  let currentTag = null;
+  let descLines = [];
+
+  for (const line of lines) {
+    const tagMatch = line.match(/^@(\S+)\s*(.*)/);
+    if (tagMatch) {
+      if (currentTag !== null) {
+        tags.push({ title: currentTag, description: descLines.join('\n').trim() });
+      }
+      currentTag = tagMatch[1];
+      descLines = tagMatch[2] ? [tagMatch[2]] : [];
+    } else if (currentTag !== null) {
+      descLines.push(line);
+    }
+  }
+
+  if (currentTag !== null) {
+    tags.push({ title: currentTag, description: descLines.join('\n').trim() });
+  }
+
+  return { tags };
+}
+
+/**
  * Extracts the YAML description from JSDoc comments with `@swagger`/`@openapi` annotation.
- * @param {object} jsDocComment - Single item of JSDoc comments from doctrine.parse
+ * @param {object} jsDocComment - Parsed JSDoc comment from parseJsDocComment
  * @returns {array} YAML parts
  */
 function extractYamlFromJsDoc(jsDocComment) {
@@ -201,6 +241,7 @@ module.exports = {
   mergeDeep,
   convertGlobPaths,
   hasEmptyProperty,
+  parseJsDocComment,
   extractYamlFromJsDoc,
   extractAnnotations,
   isTagPresentInTags,

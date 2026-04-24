@@ -2,6 +2,12 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
+## [8.2.0] - 2026-xx-xx
+
+- Replace deprecated doctrine package with buildin solution
+- Fix openapi root level security keyword (issue 322 on the original repo)
+- Improved build in typescript definition (created by mistral, verified by claude)
+
 ## [8.1.2] - 2026-04-23
 
 - Update typescript from 5.x to 6.x (affects only unit testing)
