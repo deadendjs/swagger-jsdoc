@@ -7,14 +7,7 @@ describe('parseJsDocComment', () => {
   });
 
   it('parses a single @swagger tag with multiline YAML body', () => {
-    const annotation = [
-      '/**',
-      ' * @swagger',
-      ' * /pets:',
-      ' *   get:',
-      ' *     summary: List pets',
-      ' */'
-    ].join('\n');
+    const annotation = ['/**', ' * @swagger', ' * /pets:', ' *   get:', ' *     summary: List pets', ' */'].join('\n');
 
     const result = parseJsDocComment(annotation);
     expect(result.tags).toHaveLength(1);
@@ -23,14 +16,9 @@ describe('parseJsDocComment', () => {
   });
 
   it('parses a single @openapi tag', () => {
-    const annotation = [
-      '/**',
-      ' * @openapi',
-      ' * /health:',
-      ' *   get:',
-      ' *     summary: Health check',
-      ' */'
-    ].join('\n');
+    const annotation = ['/**', ' * @openapi', ' * /health:', ' *   get:', ' *     summary: Health check', ' */'].join(
+      '\n'
+    );
 
     const result = parseJsDocComment(annotation);
     expect(result.tags).toHaveLength(1);
@@ -102,14 +90,7 @@ describe('parseJsDocComment', () => {
   });
 
   it('ignores lines before the first tag', () => {
-    const annotation = [
-      '/**',
-      ' * Some description text.',
-      ' * @swagger',
-      ' * /x:',
-      ' *   get: {}',
-      ' */'
-    ].join('\n');
+    const annotation = ['/**', ' * Some description text.', ' * @swagger', ' * /x:', ' *   get: {}', ' */'].join('\n');
 
     const { tags } = parseJsDocComment(annotation);
     expect(tags).toHaveLength(1);
@@ -130,6 +111,22 @@ describe('parseJsDocComment', () => {
     expect(tags).toHaveLength(2);
     expect(tags[0].title).toBe('param');
     expect(tags[1].title).toBe('swagger');
+  });
+
+  it('handles CRLF (Windows) line endings', () => {
+    const annotation = ['/**', ' * @swagger', ' * /pets:', ' *   get:', ' *     summary: List pets', ' */'].join(
+      '\r\n'
+    );
+    const { tags } = parseJsDocComment(annotation);
+    expect(tags[0].title).toBe('swagger');
+    expect(tags[0].description).toBe('/pets:\n  get:\n    summary: List pets');
+  });
+
+  it('handles CR-only line endings', () => {
+    const annotation = ['/**', ' * @swagger', ' * /pets:', ' *   get:', ' */'].join('\r');
+    const { tags } = parseJsDocComment(annotation);
+    expect(tags[0].title).toBe('swagger');
+    expect(tags[0].description).toBe('/pets:\n  get:');
   });
 
   it('handles coffeescript-style comments (converted to /** */ by extractAnnotations)', () => {

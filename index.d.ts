@@ -75,7 +75,7 @@ interface SchemaObject {
  */
 interface ParameterObject {
   name: string;
-  in: 'query' | 'header' | 'path' | 'cookie';
+  in: 'query' | 'header' | 'path' | 'cookie' | 'body' | 'formData';
   description?: string;
   required?: boolean;
   deprecated?: boolean;
@@ -89,9 +89,12 @@ interface ParameterObject {
 interface ResponseObject {
   description: string;
   headers?: Record<string, SchemaObject | ReferenceObject>;
-  content?: Record<string, {
-    schema?: SchemaObject | ReferenceObject;
-  }>;
+  content?: Record<
+    string,
+    {
+      schema?: SchemaObject | ReferenceObject;
+    }
+  >;
   [key: string]: any; // Allow additional properties
 }
 
@@ -163,40 +166,41 @@ interface Options {
    * @default 'utf8'
    */
   encoding?: string;
-  
+
   /**
    * Whether to throw errors when parsing fails
    * @default false
    */
   failOnErrors?: boolean;
-  
+
   /**
    * Enable verbose logging
    * @default false
    */
   verbose?: boolean;
-  
+
   /**
-   * Output format (yaml or json)
+   * Output format — pass '.yaml' or '.yml' to receive a YAML string instead of an object.
+   * Omit (or pass any other value) to receive the parsed specification object.
    */
-  format?: 'yaml' | 'json';
-  
+  format?: '.yaml' | '.yml';
+
   /**
    * Swagger 2.0 definition (deprecated, use definition instead)
    */
   swaggerDefinition?: object;
-  
+
   /**
    * OpenAPI/Swagger definition object
    */
   definition?: object;
-  
+
   /**
    * Paths to files containing JSDoc annotations
    */
   apis: string[];
 }
 
-declare function swaggerJsdoc(options: Options): Promise<OpenApiSpec>;
+declare function swaggerJsdoc(options: Options): Promise<OpenApiSpec | string>;
 
 export = swaggerJsdoc;

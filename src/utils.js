@@ -26,8 +26,8 @@ const mergeWith = (target, source, customizer) => {
   }
 
   for (const key of Object.keys(source)) {
-    // Skip unsafe key
-    if (key === '__proto__') continue;
+    // Skip unsafe keys
+    if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
 
     const srcValue = source[key];
     const tgtValue = merged[key];
@@ -95,6 +95,8 @@ function hasEmptyProperty(obj) {
  */
 function parseJsDocComment(annotation) {
   const unwrapped = annotation
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
     .replace(/^\/\*\*/, '')
     .replace(/\*\/$/, '')
     .split('\n')

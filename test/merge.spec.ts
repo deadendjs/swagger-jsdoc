@@ -33,4 +33,21 @@ describe('mergeWith method tests', () => {
     const newObj = {};
     expect(newObj).not.toHaveProperty('test');
   });
+
+  it('does not copy constructor key onto merged result', () => {
+    // Prototype pollution via constructor.prototype: even though Object.prototype is not
+    // written (isObject() returns false for Function), the 'constructor' key itself is
+    // copied as an own property, shadowing the real constructor and enabling downstream abuse.
+    const payload = JSON.parse('{"constructor": {"prototype": {"polluted": true}}}');
+    const result = mergeWith({}, payload);
+    expect(Object.prototype.hasOwnProperty.call(result, 'constructor')).toBe(false);
+    // @ts-expect-error
+    expect(Object.prototype.polluted).toBeUndefined();
+  });
+
+  it('does not copy prototype key onto merged result', () => {
+    const payload = JSON.parse('{"prototype": {"polluted": true}}');
+    const result = mergeWith({}, payload);
+    expect(Object.prototype.hasOwnProperty.call(result, 'prototype')).toBe(false);
+  });
 });
