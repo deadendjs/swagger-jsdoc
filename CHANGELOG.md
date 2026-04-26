@@ -2,7 +2,7 @@
 
 Changes in the original version can be found from CHANGELOG.old.md file
 
-## [8.2.0] - 2026-xx-xx
+## [8.2.0] - 2026-04-27
 
 - Replace deprecated doctrine package with buildin solution
 - Fix openapi root level security keyword (issue 322 on the original repo)
