@@ -10,7 +10,7 @@ const { build } = require('./specification');
  * @param {object} [options.swaggerDefinition] Set this, or definition
  * @param {object} [options.definition] Set this, or swaggerDefinition
  * @param {array} options.apis
- * @returns {Promise<object>} Output specification
+ * @returns {Promise<object|string>} Output specification
  */
 module.exports = async (options) => {
   if (!options) {

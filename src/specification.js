@@ -54,8 +54,9 @@ const prepare = (definition) => {
 };
 
 /**
- * @param {object} obj
+ * @param {object} swaggerObject
  * @param {string} [ext] - File extension
+ * @returns {string|object}
  */
 const format = (swaggerObject, ext) => {
   if (ext === '.yml' || ext === '.yaml') {
@@ -84,7 +85,7 @@ const clean = (swaggerObject) => {
  * Parse the swagger object and remove useless properties if necessary.
  *
  * @param {object} swaggerObject - Swagger object from parsing the api files.
- * @returns {object} The specification.
+ * @returns {Promise<object|string>} The specification.
  */
 const finalize = async (swaggerObject, options) => {
   let specification = swaggerObject;
@@ -194,7 +195,7 @@ const parseYamlDocument = (yamlDocsAnchors, yamlDocsErrors, yamlDocsReady, annot
 
 /**
  * @param {object} options
- * @returns {object} swaggerObject
+ * @returns {Promise<object|string>} swaggerObject
  */
 const build = async (options) => {
   // Get input definition and prepare the specification's skeleton
